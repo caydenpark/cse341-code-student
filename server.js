@@ -1,4 +1,6 @@
 // Get dependencies
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-output.json');
 var express = require('express');
 var path = require('path');
 var http = require('http');
@@ -44,6 +46,7 @@ app.use(express.static(path.join(__dirname, 'dist/cms')));
 // Tell express to map the default route ('/') to the index route
 app.use('/', index);
 app.use('/books', bookRoutes);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // establish a connection to the mongo database
 mongoose.connect(process.env.MONGODB_URI,
